@@ -112,7 +112,7 @@ function! s:import_regions() abort
 
       if text =~# ';.\+\.set_trace'
             \ || (text =~# '^\s*from\>' && text !~# '^\s*from\s\+\S\+\s\+import\s\+\S\+')
-            \ || synIDattr(synID(start, match(text, '\S\zs'), 1), 'name') != 'pythonImport'
+            " \ || synIDattr(synID(start, match(text, '\S\zs'), 1), 'name') != 'pythonImport'
         " Skip lines that look like imports but aren't highlighted as such
       elseif skip_comments && text =~# '#'
         call add(regions, [start, end])
@@ -847,6 +847,7 @@ function! impsort#sort(line1, line2, separate_groups) abort
   let s:separate_groups = a:separate_groups
   let saved = winsaveview()
 
+  " echom "separate_groups: ". separate_groups 
   if a:line2 > a:line1
     let r1 = s:prevline(a:line1)
     let r2 = s:nextline(a:line2)
@@ -891,6 +892,7 @@ endfunction
 
 
 function! s:auto_sort(separate_groups)
+
   if !exists('b:_impsort_auto') || !b:_impsort_auto
     return
   endif
